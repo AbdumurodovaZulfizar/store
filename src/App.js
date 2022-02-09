@@ -1,7 +1,8 @@
-import './App.css';
+import'./App.css';
 import React from "react";
 import SVG3 from './images/svg3.png';
 import SVG19 from './images/svg19.png';
+import VECTOR from './images/Vector.png'
 import {
   BrowserRouter as Router,
   Switch,
@@ -47,30 +48,30 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className='navbar'>
           <div>
             <nav>
-              <Link to="/">Women</Link>
-              <Link to="/men">Men</Link>
-              <Link to="/kids">Kids</Link>
+              <Link to="/" className='menu_item'>Women</Link>
+              <Link to="/men" className='menu_item'>Men</Link>
+              <Link to="/kids" className='menu_item'>Kids</Link>
             </nav>
           </div>
           <div>
             <nav>
               <div>
-                <Link to="/home">
-                  <img src={SVG3} className='' alt='logo' />
-                  <img src={SVG19} className='' alt='logo' />
+                <Link to="/home" className='menu_item logo'>
+                  <img src={SVG3} className='logo_item_1' alt='logo' />
+                  <img src={SVG19} className='logo_item_2' alt='logo' />
                 </Link>
               </div>
             </nav>
           </div>
           <div>
             <ApolloProvider client={client}>
-              <GetCurrencies />
+              <GetCurrencies className='menu_item'/>
             </ApolloProvider>
-            <Link to="/cart">
-              <i className="fas fa-shopping-cart"></i>
+            <Link to="/cart" className='menu_item'>
+              <img src={VECTOR} alt='vector'></img>
             </Link>
           </div>
 

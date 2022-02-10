@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 body {
   box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
 }
 
 .root {
@@ -19,7 +20,6 @@ body {
   text-decoration: none;
   color: #1D1F22;
   font-size: 16px;
-  font-family: 'Raleway', sans-serif;
   border: 0;
 }
 
@@ -44,5 +44,9 @@ body {
 select {
   border: 0;
   outline: 0;
+}
+
+.category {
+  font-size: 30px;
 }
 

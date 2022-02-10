@@ -2,10 +2,11 @@ import'./App.css';
 import React from "react";
 import SVG3 from './images/svg3.png';
 import SVG19 from './images/svg19.png';
-import VECTOR from './images/Vector.png'
+import VECTOR from './images/Vector.png';
+import Women from './Women';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   Link
 } from "react-router-dom";
@@ -34,7 +35,6 @@ function GetCurrencies() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
   return(<select name="currencies" id="currencies">
       {data.currencies.map(({ symbol }) => (
         <option key={symbol} value={symbol}>{symbol}</option>
@@ -59,7 +59,7 @@ class App extends React.Component {
           <div>
             <nav>
               <div>
-                <Link to="/home" className='menu_item logo'>
+                <Link to="/women" className='menu_item logo'>
                   <img src={SVG3} className='logo_item_1' alt='logo' />
                   <img src={SVG19} className='logo_item_2' alt='logo' />
                 </Link>
@@ -74,15 +74,15 @@ class App extends React.Component {
               <img src={VECTOR} alt='vector'></img>
             </Link>
           </div>
-
-          {/* <Switch>
-            <Route path="/men" component={Men} />
+          </div>
+          <Routes>
+            {/* <Route path="/men" component={Men} />
             <Route path="/kids" component={Kids} />
-            <Route path='/cart' component={cart} />
-            <Route path='/home' component={Women} />
-            <Route path="/" component={Women} />
-          </Switch> */}
-        </div>
+            <Route path='/cart' component={cart} /> */}
+            <Route path='/women' element={<Women />} />
+            <Route path="/" element={<Women />} />
+          </Routes>
+        
       </Router>
     )
   };

@@ -4,6 +4,7 @@ import SVG3 from './images/svg3.png';
 import SVG19 from './images/svg19.png';
 import VECTOR from './images/Vector.png';
 import Women from './Women';
+import DetailItem from './DeatilItem'
 import {
   BrowserRouter as Router,
   Routes,
@@ -30,12 +31,14 @@ const GET_CURRENCIES = gql`
   }
 `;
 
-function GetCurrencies() {
+const buttons = ['Women', 'Men', 'Kids'];
+
+function GetCurrencies(props) {
   const { loading, error, data } = useQuery(GET_CURRENCIES);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  return(<select name="currencies" id="currencies">
+  return(<select name="currencies" id="currencies" onChange={props.click}>
       {data.currencies.map(({ symbol }) => (
         <option key={symbol} value={symbol}>{symbol}</option>
     ))};
@@ -45,21 +48,42 @@ function GetCurrencies() {
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: 'Women',
+      currency: '$',
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.setState(() => ({
+      currency: e.target.value
+    }))
+  }
+
   render() {
     return (
       <Router>
         <div className='navbar'>
           <div>
             <nav>
-              <Link to="/" className='menu_item'>Women</Link>
-              <Link to="/men" className='menu_item'>Men</Link>
-              <Link to="/kids" className='menu_item'>Kids</Link>
+              {
+                buttons.map(function (name) {
+                  return (
+                    <Link to={{
+                      pathname: '/' + name,
+                    }} className={name === 'Women' ? 'menu_item active': 'menu_item'} onClick={() => this.setState(() => ({active: name}))} value={name} key={name}>{ name }</Link>
+                  )
+                })
+              }
             </nav>
           </div>
           <div>
             <nav>
               <div>
-                <Link to="/women" className='menu_item logo'>
+                <Link to="/" className='menu_item logo'>
                   <img src={SVG3} className='logo_item_1' alt='logo' />
                   <img src={SVG19} className='logo_item_2' alt='logo' />
                 </Link>
@@ -68,7 +92,7 @@ class App extends React.Component {
           </div>
           <div>
             <ApolloProvider client={client}>
-              <GetCurrencies className='menu_item'/>
+              <GetCurrencies className='menu_item' click={ this.handleClick }/>
             </ApolloProvider>
             <Link to="/cart" className='menu_item'>
               <img src={VECTOR} alt='vector'></img>
@@ -79,8 +103,9 @@ class App extends React.Component {
             {/* <Route path="/men" component={Men} />
             <Route path="/kids" component={Kids} />
             <Route path='/cart' component={cart} /> */}
-            <Route path='/women' element={<Women />} />
-            <Route path="/" element={<Women />} />
+          <Route path='/Women' element={<Women currency={ this.state.currency }/>} />
+          <Route path="/" element={<Women currency={this.state.currency} />} />
+          <Route path="/:id" element={<DetailItem />} />
           </Routes>
         
       </Router>

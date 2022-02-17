@@ -16,7 +16,7 @@ body {
 }
 
 .menu_item {
-  padding: 0 20px;
+  padding: 20px 20px;
   text-decoration: none;
   color: #1D1F22;
   font-size: 16px;
@@ -37,7 +37,7 @@ body {
 
 .logo_item_2{
   position: absolute;
-  top: 0;
+  top: 15px;
   left: 28px;
 }
 
@@ -50,3 +50,47 @@ select {
   font-size: 30px;
 }
 
+.active {
+  color: #5ECE7B;
+  border-bottom: 3px solid #5ECE7B;
+}
+
+.main {
+  padding-top: 40px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+
+.element {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  color: #1D1F22;
+}
+
+.element:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.element img {
+  width: 100%;
+  height: 300px;  
+}
+
+.item_name .item_price {
+  margin: 0;
+  text-decoration: unset;
+}
+
+.element_name {
+  margin-top: 10px;
+}
+
+.item_price {
+  font-weight: bold;
+}

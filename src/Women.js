@@ -1,11 +1,6 @@
 import'./App.css';
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { Link } from 'react-router-dom';
 import {
   ApolloClient,
   InMemoryCache,
@@ -26,6 +21,26 @@ const GET_CATEGORIES = gql`
 }
 `;
 
+const GET_PRODUCTS = gql`
+{
+  categories {
+    products {
+      name
+      id
+      category
+      gallery
+      prices {
+        currency {
+          label
+          symbol
+        }
+        amount
+      }
+    }
+  }
+}
+`
+
 function GetCategories(props) {
   const { loading, error, data } = useQuery(GET_CATEGORIES);
 
@@ -40,6 +55,80 @@ function GetCategories(props) {
   )
 
 }
+
+function GetProducts(props) {
+  const { loading, error, data } = useQuery(GET_PRODUCTS)
+  
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+  
+  if (props.category === 'all') {
+    return (
+      <div className='container'>
+        {
+          data.categories.map(function(obj) {
+            return obj.products.map(item => {
+              return (
+                <Link to ={{
+                  pathname: `/${item.id}`,
+                  state: {item : item}
+                }} role='button'>
+                <div className='element' key={item.id}>
+                <img src={item.gallery} alt='img'></img>
+                <div>
+                  <p className='item_name'>{item.name}</p>
+                  {item.prices.map(function (ele) {
+                    if (ele.currency.symbol === props.currency) {
+                      return (<p className='item_price'>{ele.currency.symbol} {ele.amount}</p>)
+                    } else {
+                      return null
+                    }
+                  })}
+                </div>
+                  </div>
+                  </Link>)
+            })
+          })
+        }
+      </div>
+  )
+  } else {
+    return (
+      <div className='container'>
+        {
+          data.categories.map(function (obj) {
+            return obj.products.map(function(item) {
+              if (item.category === props.category) {
+                return (
+                  <Link to ={{
+                    pathname: `/${item.id}`,
+                    state: {item : item}
+                  }} role='button'>
+                <div className='element' key={item.id}>
+                <img src={item.gallery} alt='img'></img>
+                <div>
+                  <p className='item_name'>{item.name}</p>
+                  {item.prices.map(function (ele) {
+                    if (ele.currency.symbol === props.currency) {
+                      return (<p className='item_price'>{ele.currency.symbol} {ele.amount}</p>)
+                    } else {
+                      return null
+                    }
+                  })}
+                </div>
+              </div></Link>)
+              } else {
+                return null
+              }
+            })
+          })
+        }
+      </div>
+    )
+  }
+
+}
+
 
 export default class Women extends Component {
   constructor(props) {
@@ -58,9 +147,10 @@ export default class Women extends Component {
 
   render() {
     console.log(this.state.category)
-    return (<div>
+    return (<div className='main'>
       <ApolloProvider client={client}>
-        <GetCategories click={this.handleClick}/>
+        <GetCategories click={this.handleClick} />
+        <GetProducts currency={this.props.currency} category={this.state.category}/>
       </ApolloProvider>
     </div>);
   }

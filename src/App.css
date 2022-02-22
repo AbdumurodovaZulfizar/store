@@ -94,3 +94,48 @@ select {
 .item_price {
   font-weight: bold;
 }
+
+.detail_card {
+  display: grid;
+  grid-template-columns: 10% 55% 35%;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+
+.detail_images img{
+  width: 100%;
+  margin: 15px 0;
+}
+
+.active_image {
+  margin: 15px 60px;
+}
+
+.active_image img {
+  width: 100%;
+}
+
+.add_card {
+  background-color: #5ECE7B;
+  padding: 15px auto;
+  text-align: center;
+  height: 40px;
+  width: 100%;
+  border: 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.flex_box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex_box div {
+  width: 100%;
+  border: 1px solid #1D1F22;
+  margin: 0 3px 0 0;
+  text-align: center;
+  height: 20px;
+}

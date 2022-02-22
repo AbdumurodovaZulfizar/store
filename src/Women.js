@@ -69,24 +69,24 @@ function GetProducts(props) {
           data.categories.map(function(obj) {
             return obj.products.map(item => {
               return (
-                <Link to ={{
-                  pathname: `/${item.id}`,
-                  state: {item : item}
-                }} role='button'>
+                
                 <div className='element' key={item.id}>
-                <img src={item.gallery} alt='img'></img>
+                  <Link to ={`/${item.id}`
+                } role='button'>
+                    <img src={item.gallery[0]} alt='img'></img>
+                    </Link>
                 <div>
                   <p className='item_name'>{item.name}</p>
                   {item.prices.map(function (ele) {
                     if (ele.currency.symbol === props.currency) {
-                      return (<p className='item_price'>{ele.currency.symbol} {ele.amount}</p>)
+                      return (<p className='item_price' key={props.currency}>{ele.currency.symbol} {ele.amount}</p>)
                     } else {
                       return null
                     }
                   })}
                 </div>
                   </div>
-                  </Link>)
+                  )
             })
           })
         }
@@ -100,23 +100,22 @@ function GetProducts(props) {
             return obj.products.map(function(item) {
               if (item.category === props.category) {
                 return (
-                  <Link to ={{
-                    pathname: `/${item.id}`,
-                    state: {item : item}
-                  }} role='button'>
-                <div className='element' key={item.id}>
-                <img src={item.gallery} alt='img'></img>
+                  
+                  <div className='element' key={item.id}>
+                    <Link  to ={`/${item.id}`} role='button'>
+                      <img src={item.gallery[0]} alt='img'></img>
+                      </Link>
                 <div>
                   <p className='item_name'>{item.name}</p>
                   {item.prices.map(function (ele) {
                     if (ele.currency.symbol === props.currency) {
-                      return (<p className='item_price'>{ele.currency.symbol} {ele.amount}</p>)
+                      return (<p className='item_price' key={props.currency}>{ele.currency.symbol} {ele.amount}</p>)
                     } else {
                       return null
                     }
                   })}
                 </div>
-              </div></Link>)
+              </div>)
               } else {
                 return null
               }

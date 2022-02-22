@@ -4,7 +4,8 @@ import SVG3 from './images/svg3.png';
 import SVG19 from './images/svg19.png';
 import VECTOR from './images/Vector.png';
 import Women from './Women';
-import DetailItem from './DeatilItem'
+import DetailItem from './DeatilItem';
+import { createBrowserHistory } from 'history';
 import {
   BrowserRouter as Router,
   Routes,
@@ -64,8 +65,9 @@ class App extends React.Component {
   }
 
   render() {
+    const history = createBrowserHistory();
     return (
-      <Router>
+      <Router history={history}>
         <div className='navbar'>
           <div>
             <nav>
@@ -105,7 +107,7 @@ class App extends React.Component {
             <Route path='/cart' component={cart} /> */}
           <Route path='/Women' element={<Women currency={ this.state.currency }/>} />
           <Route path="/" element={<Women currency={this.state.currency} />} />
-          <Route path="/:id" element={<DetailItem />} />
+          <Route path="/:id" element={<DetailItem currency={this.state.currency}/>} />
           </Routes>
         
       </Router>

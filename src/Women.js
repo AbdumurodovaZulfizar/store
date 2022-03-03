@@ -1,5 +1,5 @@
 import'./App.css';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ApolloClient,
@@ -145,6 +145,7 @@ export default class Women extends Component {
   }
 
   render() {
+    console.log('hello')
     console.log(this.state.category)
     return (<div className='main'>
       <ApolloProvider client={client}>
@@ -154,3 +155,4 @@ export default class Women extends Component {
     </div>);
   }
 }
+

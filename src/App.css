@@ -139,3 +139,8 @@ select {
   text-align: center;
   height: 20px;
 }
+
+.activeAtr {
+  background-color: #1D1F22;
+  color: #fff;
+}

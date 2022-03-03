@@ -32,6 +32,8 @@ const GET_CURRENCIES = gql`
   }
 `;
 
+window.localStorage.setItem('card', ['emty'])
+
 const buttons = ['Women', 'Men', 'Kids'];
 
 function GetCurrencies(props) {
@@ -57,6 +59,7 @@ class App extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
   }
+
 
   handleClick(e) {
     this.setState(() => ({

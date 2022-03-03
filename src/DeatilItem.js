@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import {
   useQuery,
   gql
 } from "@apollo/client";
-
 
 export default function DetailItem(props) {
   const { id } = useParams();
@@ -38,8 +37,20 @@ export default function DetailItem(props) {
       }
   }
 `;
+
+  const div = document.getElementsByClassName('attribute');
+  for (let ele of div) {
+      const elements = ele.querySelectorAll('.elements');
+      elements[0].classList.add('activeAtr')
+      for (let atr of elements) {
+        atr.addEventListener("click", function (e) {
+          elements.forEach(ele => ele.classList.remove('activeAtr'))
+          e.target.className += ' activeAtr';
+        })
+      }
+    }
   const { loading, error, data } = useQuery(GET_DETAILS);
-  const [activeImage, setActiveImage] = useState('src')
+  const [activeImage, setActiveImage] = useState('src');
   if (error) return(<p>Error :(</p>)
   if (loading) return (<p>Loading...</p>)
   let image = ''
@@ -48,28 +59,31 @@ export default function DetailItem(props) {
   } else {
     image = <img src={activeImage} alt='img'></img>
   }
+  function simulateClick(e) {
+    e.click()
+  }
   return (
     <div className='detail_card'>
       <div className='detail_images'>
-        {data.product.gallery.map(ele => {
-          return <img key={ele} src={ele} alt={ele} role="button"
+        {data.product.gallery.map((ele, id) => {
+            return <img key={id} src={ele} alt={ele} role="button"
             onClick={() => setActiveImage(ele)}
           ></img>
         })}
       </div>
-      <div className='active_image'>
+      <div className='active_image' ref={simulateClick} onClick={() => console.log('click')}>
         {image}
       </div>
       <div>
         <h2><b>{data.product.brand}</b></h2>
-        <h2>{data.product.name}</h2>
+        <h3>{data.product.name}</h3>
         {data.product.attributes.map(atr => {
           return (
-            <div key={atr.id}>
+            <div className='attribute' key={atr.id}>
               <h4><b>{atr.name}:</b></h4>
               <div className='flex_box'>
-              {atr.items.map(ele => {
-                return <div key={ele.id}>{ele.displayValue}</div>
+                {atr.items.map(ele => {
+                return <div role="button" className='elements' key={ele.id}>{ele.displayValue}</div>
               })}</div>
             </div>
           )
@@ -91,4 +105,6 @@ export default function DetailItem(props) {
     )
   
 }
+
+
 
